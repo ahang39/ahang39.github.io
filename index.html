@@ -5,25 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>绿叶菜</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --bg: #fafaf9;
-    --fg: #1a1a1a;
-    --muted: #999;
+    --fg: #111;
+    --muted: #888;
     --green: #2d6a4f;
+    --green-light: #d8f3dc;
     --border: rgba(0,0,0,.06);
+    --card: #fff;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0e0e0e;
-      --fg: #ddd;
+      --bg: #0a0a0a;
+      --fg: #eee;
       --muted: #555;
       --green: #52b788;
+      --green-light: rgba(82,183,136,.08);
       --border: rgba(255,255,255,.06);
+      --card: #141414;
     }
   }
 
@@ -34,7 +38,6 @@
     background: var(--bg);
     color: var(--fg);
     min-height: 100dvh;
-    padding: 0;
     user-select: none;
     overflow-x: hidden;
   }
@@ -49,34 +52,22 @@
     position: relative;
   }
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--border), transparent);
-    animation: breathe 3s ease infinite;
-  }
-
-  .greeting {
-    font-size: .7rem;
-    color: var(--muted);
-    letter-spacing: .2em;
+  .eyebrow {
+    font-size: .65rem;
+    color: var(--green);
+    letter-spacing: .25em;
     text-transform: uppercase;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     opacity: 0;
-    animation: fadeUp .6s ease .1s forwards;
+    animation: fadeUp .5s ease .1s forwards;
   }
 
   .name {
     font-family: 'Noto Serif SC', serif;
-    font-size: clamp(3rem, 10vw, 6rem);
-    font-weight: 700;
+    font-size: clamp(4rem, 14vw, 9rem);
+    font-weight: 900;
+    line-height: .95;
     letter-spacing: -0.04em;
-    line-height: 1.05;
     opacity: 0;
     animation: fadeUp .8s ease .2s forwards;
   }
@@ -84,63 +75,259 @@
   .name .leaf {
     color: var(--green);
     display: inline-block;
-    animation: sway 3s ease-in-out infinite;
-    transform-origin: bottom center;
+    animation: bounce 2s ease infinite;
   }
 
-  .bio {
+  .tagline {
     margin-top: 2rem;
-    max-width: 420px;
+    font-size: clamp(.85rem, 2vw, 1rem);
+    line-height: 1.8;
+    max-width: 480px;
     opacity: 0;
     animation: fadeUp .6s ease .4s forwards;
   }
 
-  .bio p {
-    font-size: .8rem;
-    line-height: 1.9;
-    color: var(--muted);
-  }
+  .tagline strong { color: var(--green); font-weight: 400; }
 
-  .bio p + p { margin-top: .3rem; }
-
-  .bio em {
-    color: var(--fg);
-    font-style: normal;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* ===== TRAITS ===== */
-  .traits {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
+  .cta-row {
     margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
     opacity: 0;
-    animation: fadeUp .6s ease .55s forwards;
+    animation: fadeUp .6s ease .5s forwards;
   }
 
-  .trait {
-    font-size: .6rem;
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .7rem;
     letter-spacing: .1em;
     text-transform: uppercase;
-    padding: .35rem .7rem;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    color: var(--muted);
+    text-decoration: none;
+    color: var(--fg);
+    padding: .6rem 1.2rem;
+    border: 1px solid var(--fg);
     transition: all .3s ease;
   }
 
-  .trait:hover {
-    color: var(--fg);
-    border-color: var(--fg);
+  .cta:hover {
+    background: var(--fg);
+    color: var(--bg);
   }
 
-  /* ===== BOTTOM BAR ===== */
+  .cta.primary {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+
+  .cta.primary:hover {
+    opacity: .85;
+  }
+
+  /* ===== MARQUEE ===== */
+  .marquee-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: .8rem 0;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp .6s ease .6s forwards;
+  }
+
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: scroll 20s linear infinite;
+  }
+
+  .marquee span {
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    padding: 0 2rem;
+  }
+
+  .marquee span::before {
+    content: '·';
+    margin-right: 2rem;
+    color: var(--green);
+  }
+
+  /* ===== FACTS ===== */
+  .facts {
+    padding: 5rem clamp(2rem, 8vw, 6rem);
+  }
+
+  .facts h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+  }
+
+  .facts h2.visible { animation: fadeUp .6s ease forwards; }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .fact {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    opacity: 0;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .fact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  }
+
+  .fact.visible { animation: fadeUp .5s ease forwards; }
+
+  .fact-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--green);
+  }
+
+  .fact-label {
+    font-size: .6rem;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-top: .6rem;
+  }
+
+  .fact-note {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: .5rem;
+    line-height: 1.6;
+  }
+
+  /* ===== STACK ===== */
+  .stack {
+    padding: 3rem clamp(2rem, 8vw, 6rem) 5rem;
+  }
+
+  .stack h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    opacity: 0;
+  }
+
+  .stack h2.visible { animation: fadeUp .6s ease forwards; }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .stack-item {
+    font-size: .65rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .5rem 1rem;
+    background: var(--green-light);
+    color: var(--green);
+    border-radius: 2px;
+    opacity: 0;
+    transition: transform .2s;
+  }
+
+  .stack-item:hover { transform: scale(1.05); }
+  .stack-item.visible { animation: fadeUp .4s ease forwards; }
+
+  /* ===== NOW ===== */
+  .now {
+    padding: 3rem clamp(2rem, 8vw, 6rem) 5rem;
+  }
+
+  .now h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    opacity: 0;
+  }
+
+  .now h2.visible { animation: fadeUp .6s ease forwards; }
+
+  .now-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .now-item {
+    padding: 1.2rem;
+    border-left: 2px solid var(--green);
+    opacity: 0;
+  }
+
+  .now-item.visible { animation: fadeUp .5s ease forwards; }
+
+  .now-label {
+    font-size: .55rem;
+    color: var(--muted);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: .3rem;
+  }
+
+  .now-value {
+    font-size: .9rem;
+    color: var(--fg);
+  }
+
+  /* ===== QUOTE ===== */
+  .quote-section {
+    padding: 4rem clamp(2rem, 8vw, 6rem) 6rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .quote {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    line-height: 1.7;
+    max-width: 550px;
+    font-weight: 700;
+    opacity: 0;
+  }
+
+  .quote.visible { animation: fadeUp .8s ease forwards; }
+
+  .quote-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    opacity: 0;
+  }
+
+  .quote-attr.visible { animation: fadeUp .6s ease .2s forwards; }
+
+  /* ===== BOTTOM ===== */
   .bottom-bar {
-    position: fixed;
+    position: sticky;
     bottom: 0;
-    left: 0;
-    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,14 +335,9 @@
     background: var(--bg);
     border-top: 1px solid var(--border);
     z-index: 10;
-    opacity: 0;
-    animation: fadeUp .6s ease .8s forwards;
   }
 
-  .links {
-    display: flex;
-    gap: 1.5rem;
-  }
+  .links { display: flex; gap: 1.5rem; }
 
   .links a {
     font-size: .65rem;
@@ -184,132 +366,7 @@
   .clock {
     font-size: .6rem;
     color: var(--muted);
-    letter-spacing: .08em;
     font-variant-numeric: tabular-nums;
-  }
-
-  /* ===== SCROLL SECTION ===== */
-  .section-scroll {
-    padding: 6rem clamp(2rem, 8vw, 6rem) 8rem;
-  }
-
-  .section-scroll h2 {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    font-weight: 700;
-    margin-bottom: 2rem;
-    opacity: 0;
-  }
-
-  .section-scroll h2.visible {
-    animation: fadeUp .6s ease forwards;
-  }
-
-  .fact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .fact {
-    background: var(--bg);
-    padding: 1.5rem;
-    opacity: 0;
-  }
-
-  .fact.visible {
-    animation: fadeUp .5s ease forwards;
-  }
-
-  .fact-num {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--green);
-  }
-
-  .fact-label {
-    font-size: .6rem;
-    color: var(--muted);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-top: .6rem;
-  }
-
-  .fact-note {
-    font-size: .7rem;
-    color: var(--muted);
-    margin-top: .4rem;
-    line-height: 1.6;
-  }
-
-  /* ===== QUOTE ===== */
-  .quote-section {
-    padding: 4rem clamp(2rem, 8vw, 6rem) 8rem;
-  }
-
-  .quote {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.1rem, 3vw, 1.6rem);
-    line-height: 1.8;
-    max-width: 500px;
-    color: var(--fg);
-    opacity: 0;
-  }
-
-  .quote.visible {
-    animation: fadeUp .8s ease forwards;
-  }
-
-  .quote-attr {
-    font-family: 'DM Mono', monospace;
-    font-size: .6rem;
-    color: var(--muted);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-top: 1.2rem;
-    opacity: 0;
-  }
-
-  .quote-attr.visible {
-    animation: fadeUp .6s ease .2s forwards;
-  }
-
-  /* ===== NOW ===== */
-  .now-section {
-    padding: 4rem clamp(2rem, 8vw, 6rem) 8rem;
-  }
-
-  .now-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .now-item {
-    opacity: 0;
-  }
-
-  .now-item.visible {
-    animation: fadeUp .5s ease forwards;
-  }
-
-  .now-label {
-    font-size: .55rem;
-    color: var(--muted);
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    margin-bottom: .4rem;
-  }
-
-  .now-value {
-    font-size: .85rem;
-    color: var(--fg);
-    line-height: 1.5;
   }
 
   /* ===== ANIMATIONS ===== */
@@ -318,22 +375,22 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes sway {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(3deg); }
-    75% { transform: rotate(-2deg); }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
-  @keyframes breathe {
-    0%, 100% { opacity: .4; }
-    50% { opacity: 1; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 
   /* ===== MOBILE ===== */
   @media (max-width: 600px) {
-    .bottom-bar { padding: .8rem 1.5rem; }
-    .section-scroll, .quote-section, .now-section { padding: 3rem 1.5rem 6rem; }
+    .hero { padding: 2rem 1.5rem; }
+    .facts, .stack, .now, .quote-section { padding: 3rem 1.5rem; }
     .fact-grid { grid-template-columns: 1fr 1fr; }
+    .bottom-bar { padding: .8rem 1.5rem; }
   }
 </style>
 </head>
@@ -341,45 +398,92 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="greeting">hello, i'm</p>
+    <p class="eyebrow">based in shanghai</p>
     <h1 class="name">绿<span class="leaf">叶</span>菜</h1>
-    <div class="bio">
-      <p>在上海写代码，偶尔也做点别的。</p>
-      <p>喜欢<em>简单的东西</em>和<em>好看的排版</em>。</p>
-      <p>不太会介绍自己，页面替我说。</p>
-    </div>
-    <div class="traits">
-      <span class="trait">code</span>
-      <span class="trait">design</span>
-      <span class="trait">night owl</span>
-      <span class="trait">coffee > tea</span>
-      <span class="trait">vim user</span>
+    <p class="tagline">
+      写代码的。<strong>审美在线</strong>的那种。<br>
+      白天摸鱼，晚上产出。<br>
+      喜欢把事情做得漂亮，不只是能跑。
+    </p>
+    <div class="cta-row">
+      <a class="cta primary" href="https://github.com/ahang39" target="_blank">GitHub →</a>
+      <a class="cta" href="mailto:i@ahang.co">Contact</a>
     </div>
   </section>
 
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span>Full Stack</span><span>Design</span><span>Automation</span><span>Open Source</span><span>Night Owl</span><span>Coffee Addict</span><span>Vim</span><span>Arch btw</span>
+      <span>Full Stack</span><span>Design</span><span>Automation</span><span>Open Source</span><span>Night Owl</span><span>Coffee Addict</span><span>Vim</span><span>Arch btw</span>
+    </div>
+  </div>
+
   <!-- FACTS -->
-  <section class="section-scroll">
-    <h2>一些数字</h2>
+  <section class="facts">
+    <h2>说几个数</h2>
     <div class="fact-grid">
       <div class="fact">
         <div class="fact-num" id="github-stars">--</div>
         <div class="fact-label">GitHub Stars</div>
-        <div class="fact-note">大部分是 star 别人的</div>
+        <div class="fact-note">还在涨，谢谢各位</div>
       </div>
       <div class="fact">
         <div class="fact-num" id="repos">--</div>
         <div class="fact-label">Repositories</div>
-        <div class="fact-note">一半是 hello world</div>
+        <div class="fact-note">每一个都是认真写的（好吧大部分）</div>
       </div>
       <div class="fact">
         <div class="fact-num">∞</div>
-        <div class="fact-label">Tabs Open</div>
-        <div class="fact-note">关不掉，根本关不掉</div>
+        <div class="fact-label">浏览器标签</div>
+        <div class="fact-note">Chrome 吃内存怪我咯</div>
       </div>
       <div class="fact">
-        <div class="fact-num">0</div>
-        <div class="fact-label">Social Skills</div>
-        <div class="fact-note">但代码 review 写得很认真</div>
+        <div class="fact-num">24/7</div>
+        <div class="fact-label">在线时间</div>
+        <div class="fact-note">凌晨三点秒回消息不是传说</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack">
+    <h2>武器库</h2>
+    <div class="stack-list">
+      <span class="stack-item">Python</span>
+      <span class="stack-item">TypeScript</span>
+      <span class="stack-item">React</span>
+      <span class="stack-item">Node.js</span>
+      <span class="stack-item">Docker</span>
+      <span class="stack-item">Linux</span>
+      <span class="stack-item">Figma</span>
+      <span class="stack-item">Vim</span>
+      <span class="stack-item">Git</span>
+      <span class="stack-item">CI/CD</span>
+      <span class="stack-item">PostgreSQL</span>
+      <span class="stack-item">Redis</span>
+    </div>
+  </section>
+
+  <!-- NOW -->
+  <section class="now">
+    <h2>此刻</h2>
+    <div class="now-grid">
+      <div class="now-item">
+        <div class="now-label">在做</div>
+        <div class="now-value">搞事情</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">在听</div>
+        <div class="now-value">随机播放</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">在想</div>
+        <div class="now-value">怎么让代码更好看</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">状态</div>
+        <div class="now-value">open for work</div>
       </div>
     </div>
   </section>
@@ -387,38 +491,16 @@
   <!-- QUOTE -->
   <section class="quote-section">
     <blockquote class="quote">
-      "代码能跑就不要动。"
+      "好的代码不需要注释，<br>好的程序员需要咖啡。"
     </blockquote>
-    <p class="quote-attr">- 每个程序员的信仰</p>
-  </section>
-
-  <!-- NOW -->
-  <section class="now-section">
-    <h2>此刻</h2>
-    <div class="now-grid">
-      <div class="now-item">
-        <div class="now-label">在听</div>
-        <div class="now-value">随机播放</div>
-      </div>
-      <div class="now-item">
-        <div class="now-label">在看</div>
-        <div class="now-value">终端</div>
-      </div>
-      <div class="now-item">
-        <div class="now-label">在想</div>
-        <div class="now-value">要不要重构</div>
-      </div>
-      <div class="now-item">
-        <div class="now-label">状态</div>
-        <div class="now-value">available</div>
-      </div>
-    </div>
+    <p class="quote-attr">- 我说的</p>
   </section>
 
   <!-- BOTTOM -->
   <nav class="bottom-bar">
     <div class="links">
       <a href="https://github.com/ahang39" target="_blank">GitHub</a>
+      <a href="mailto:i@ahang.co">Email</a>
     </div>
     <div class="clock" id="clock"></div>
   </nav>
@@ -435,7 +517,7 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // GitHub stats (public API, no auth needed)
+  // GitHub stats
   fetch('https://api.github.com/users/ahang39')
     .then(r => r.json())
     .then(d => {
@@ -460,9 +542,9 @@
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.15 });
 
-  document.querySelectorAll('h2, .fact, .quote, .quote-attr, .now-item').forEach(el => {
+  document.querySelectorAll('h2, .fact, .stack-item, .now-item, .quote, .quote-attr').forEach(el => {
     observer.observe(el);
   });
 </script>
