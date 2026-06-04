@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahang39</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=DM+Mono:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fafaf9;
+    --fg: #1a1a1a;
+    --muted: #888;
+    --accent: #1a1a1a;
+    --border: rgba(0,0,0,.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111;
+      --fg: #e8e8e8;
+      --muted: #666;
+      --accent: #e8e8e8;
+      --border: rgba(255,255,255,.08);
+    }
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: 'DM Mono', 'SF Mono', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 2rem;
+    user-select: none;
+    cursor: default;
+  }
+
+  /* ===== TOP ===== */
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp .8s ease forwards;
+  }
+
+  .name span {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeUp .6s ease forwards;
+  }
+  .name span:nth-child(1) { animation-delay: .2s; }
+  .name span:nth-child(2) { animation-delay: .35s; }
+
+  .tag {
+    font-size: .7rem;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-top: .6rem;
+    opacity: 0;
+    animation: fadeUp .6s ease .5s forwards;
+  }
+
+  .status {
+    font-size: .65rem;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp .6s ease .6s forwards;
+  }
+
+  .status .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #4ade80;
+    margin-right: 4px;
+    vertical-align: middle;
+    animation: pulse 2s ease infinite;
+  }
+
+  /* ===== MIDDLE ===== */
+  .middle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .line-art {
+    width: min(80vw, 500px);
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    opacity: 0;
+    animation: fadeUp .8s ease .7s forwards;
+  }
+
+  .line-art::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 1px;
+    background: var(--fg);
+    animation: lineGrow 1.2s ease .9s forwards;
+  }
+
+  /* ===== BOTTOM ===== */
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeUp .6s ease .8s forwards;
+  }
+
+  .links a {
+    font-size: .7rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color .3s;
+  }
+
+  .links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--fg);
+    transition: width .3s ease;
+  }
+
+  .links a:hover {
+    color: var(--fg);
+  }
+
+  .links a:hover::after {
+    width: 100%;
+  }
+
+  .time {
+    font-size: .6rem;
+    color: var(--muted);
+    letter-spacing: .08em;
+    opacity: 0;
+    animation: fadeUp .6s ease 1s forwards;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes lineGrow {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 600px) {
+    body { padding: 2rem 1.5rem; }
+    .top, .bottom { flex-direction: column; gap: 1rem; }
+    .status { text-align: left; }
+    .bottom { align-items: flex-start; }
+    .links { flex-wrap: wrap; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <div>
+      <h1 class="name"><span>ahang</span><span>39</span></h1>
+      <p class="tag">Shanghai</p>
+    </div>
+    <div class="status">
+      <span class="dot"></span> available<br>
+      Shanghai, CN
+    </div>
+  </div>
+
+  <div class="middle">
+    <div class="line-art"></div>
+  </div>
+
+  <div class="bottom">
+    <div class="links">
+      <a href="https://github.com/ahang39" target="_blank">GitHub</a>
+    </div>
+    <div class="time" id="clock"></div>
+  </div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s} CST`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
