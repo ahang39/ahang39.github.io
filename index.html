@@ -3,150 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ahang39</title>
+<title>绿叶菜</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=DM+Mono:wght@300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --bg: #fafaf9;
     --fg: #1a1a1a;
-    --muted: #888;
-    --accent: #1a1a1a;
-    --border: rgba(0,0,0,.08);
+    --muted: #999;
+    --green: #2d6a4f;
+    --border: rgba(0,0,0,.06);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #111;
-      --fg: #e8e8e8;
-      --muted: #666;
-      --accent: #e8e8e8;
-      --border: rgba(255,255,255,.08);
+      --bg: #0e0e0e;
+      --fg: #ddd;
+      --muted: #555;
+      --green: #52b788;
+      --border: rgba(255,255,255,.06);
     }
   }
 
-  html {
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-  }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
   body {
-    font-family: 'DM Mono', 'SF Mono', monospace;
+    font-family: 'DM Mono', monospace;
     background: var(--bg);
     color: var(--fg);
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 3rem 2rem;
+    padding: 0;
     user-select: none;
-    cursor: default;
+    overflow-x: hidden;
   }
 
-  /* ===== TOP ===== */
-  .top {
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100dvh;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem clamp(2rem, 8vw, 6rem);
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+    animation: breathe 3s ease infinite;
+  }
+
+  .greeting {
+    font-size: .7rem;
+    color: var(--muted);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp .6s ease .1s forwards;
   }
 
   .name {
     font-family: 'Noto Serif SC', serif;
-    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-size: clamp(3rem, 10vw, 6rem);
     font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
     opacity: 0;
-    animation: fadeUp .8s ease forwards;
+    animation: fadeUp .8s ease .2s forwards;
   }
 
-  .name span {
+  .name .leaf {
+    color: var(--green);
     display: inline-block;
-    opacity: 0;
-    animation: fadeUp .6s ease forwards;
+    animation: sway 3s ease-in-out infinite;
+    transform-origin: bottom center;
   }
-  .name span:nth-child(1) { animation-delay: .2s; }
-  .name span:nth-child(2) { animation-delay: .35s; }
 
-  .tag {
-    font-size: .7rem;
+  .bio {
+    margin-top: 2rem;
+    max-width: 420px;
+    opacity: 0;
+    animation: fadeUp .6s ease .4s forwards;
+  }
+
+  .bio p {
+    font-size: .8rem;
+    line-height: 1.9;
     color: var(--muted);
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    margin-top: .6rem;
-    opacity: 0;
-    animation: fadeUp .6s ease .5s forwards;
   }
 
-  .status {
-    font-size: .65rem;
-    color: var(--muted);
-    text-align: right;
-    line-height: 1.8;
-    opacity: 0;
-    animation: fadeUp .6s ease .6s forwards;
+  .bio p + p { margin-top: .3rem; }
+
+  .bio em {
+    color: var(--fg);
+    font-style: normal;
+    border-bottom: 1px solid var(--border);
   }
 
-  .status .dot {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #4ade80;
-    margin-right: 4px;
-    vertical-align: middle;
-    animation: pulse 2s ease infinite;
-  }
-
-  /* ===== MIDDLE ===== */
-  .middle {
-    flex: 1;
+  /* ===== TRAITS ===== */
+  .traits {
     display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .line-art {
-    width: min(80vw, 500px);
-    height: 1px;
-    background: var(--border);
-    position: relative;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 2.5rem;
     opacity: 0;
-    animation: fadeUp .8s ease .7s forwards;
+    animation: fadeUp .6s ease .55s forwards;
   }
 
-  .line-art::before {
-    content: '';
-    position: absolute;
+  .trait {
+    font-size: .6rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .35rem .7rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    transition: all .3s ease;
+  }
+
+  .trait:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+  }
+
+  /* ===== BOTTOM BAR ===== */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
     left: 0;
-    top: 0;
-    width: 0;
-    height: 1px;
-    background: var(--fg);
-    animation: lineGrow 1.2s ease .9s forwards;
-  }
-
-  /* ===== BOTTOM ===== */
-  .bottom {
+    right: 0;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    padding: 1rem clamp(2rem, 8vw, 6rem);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    z-index: 10;
+    opacity: 0;
+    animation: fadeUp .6s ease .8s forwards;
   }
 
   .links {
     display: flex;
     gap: 1.5rem;
-    opacity: 0;
-    animation: fadeUp .6s ease .8s forwards;
   }
 
   .links a {
-    font-size: .7rem;
+    font-size: .65rem;
     color: var(--muted);
     text-decoration: none;
-    letter-spacing: .1em;
+    letter-spacing: .12em;
     text-transform: uppercase;
     position: relative;
     transition: color .3s;
@@ -163,82 +178,293 @@
     transition: width .3s ease;
   }
 
-  .links a:hover {
-    color: var(--fg);
-  }
+  .links a:hover { color: var(--fg); }
+  .links a:hover::after { width: 100%; }
 
-  .links a:hover::after {
-    width: 100%;
-  }
-
-  .time {
+  .clock {
     font-size: .6rem;
     color: var(--muted);
     letter-spacing: .08em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== SCROLL SECTION ===== */
+  .section-scroll {
+    padding: 6rem clamp(2rem, 8vw, 6rem) 8rem;
+  }
+
+  .section-scroll h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
     opacity: 0;
-    animation: fadeUp .6s ease 1s forwards;
+  }
+
+  .section-scroll h2.visible {
+    animation: fadeUp .6s ease forwards;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .fact {
+    background: var(--bg);
+    padding: 1.5rem;
+    opacity: 0;
+  }
+
+  .fact.visible {
+    animation: fadeUp .5s ease forwards;
+  }
+
+  .fact-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--green);
+  }
+
+  .fact-label {
+    font-size: .6rem;
+    color: var(--muted);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-top: .6rem;
+  }
+
+  .fact-note {
+    font-size: .7rem;
+    color: var(--muted);
+    margin-top: .4rem;
+    line-height: 1.6;
+  }
+
+  /* ===== QUOTE ===== */
+  .quote-section {
+    padding: 4rem clamp(2rem, 8vw, 6rem) 8rem;
+  }
+
+  .quote {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    line-height: 1.8;
+    max-width: 500px;
+    color: var(--fg);
+    opacity: 0;
+  }
+
+  .quote.visible {
+    animation: fadeUp .8s ease forwards;
+  }
+
+  .quote-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    color: var(--muted);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-top: 1.2rem;
+    opacity: 0;
+  }
+
+  .quote-attr.visible {
+    animation: fadeUp .6s ease .2s forwards;
+  }
+
+  /* ===== NOW ===== */
+  .now-section {
+    padding: 4rem clamp(2rem, 8vw, 6rem) 8rem;
+  }
+
+  .now-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .now-item {
+    opacity: 0;
+  }
+
+  .now-item.visible {
+    animation: fadeUp .5s ease forwards;
+  }
+
+  .now-label {
+    font-size: .55rem;
+    color: var(--muted);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: .4rem;
+  }
+
+  .now-value {
+    font-size: .85rem;
+    color: var(--fg);
+    line-height: 1.5;
   }
 
   /* ===== ANIMATIONS ===== */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes lineGrow {
-    from { width: 0; }
-    to { width: 100%; }
+  @keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    75% { transform: rotate(-2deg); }
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .4; }
+  @keyframes breathe {
+    0%, 100% { opacity: .4; }
+    50% { opacity: 1; }
   }
 
   /* ===== MOBILE ===== */
   @media (max-width: 600px) {
-    body { padding: 2rem 1.5rem; }
-    .top, .bottom { flex-direction: column; gap: 1rem; }
-    .status { text-align: left; }
-    .bottom { align-items: flex-start; }
-    .links { flex-wrap: wrap; gap: 1rem; }
+    .bottom-bar { padding: .8rem 1.5rem; }
+    .section-scroll, .quote-section, .now-section { padding: 3rem 1.5rem 6rem; }
+    .fact-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-  <div class="top">
-    <div>
-      <h1 class="name"><span>ahang</span><span>39</span></h1>
-      <p class="tag">Shanghai</p>
+  <!-- HERO -->
+  <section class="hero">
+    <p class="greeting">hello, i'm</p>
+    <h1 class="name">绿<span class="leaf">叶</span>菜</h1>
+    <div class="bio">
+      <p>在上海写代码，偶尔也做点别的。</p>
+      <p>喜欢<em>简单的东西</em>和<em>好看的排版</em>。</p>
+      <p>不太会介绍自己，页面替我说。</p>
     </div>
-    <div class="status">
-      <span class="dot"></span> available<br>
-      Shanghai, CN
+    <div class="traits">
+      <span class="trait">code</span>
+      <span class="trait">design</span>
+      <span class="trait">night owl</span>
+      <span class="trait">coffee > tea</span>
+      <span class="trait">vim user</span>
     </div>
-  </div>
+  </section>
 
-  <div class="middle">
-    <div class="line-art"></div>
-  </div>
+  <!-- FACTS -->
+  <section class="section-scroll">
+    <h2>一些数字</h2>
+    <div class="fact-grid">
+      <div class="fact">
+        <div class="fact-num" id="github-stars">--</div>
+        <div class="fact-label">GitHub Stars</div>
+        <div class="fact-note">大部分是 star 别人的</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num" id="repos">--</div>
+        <div class="fact-label">Repositories</div>
+        <div class="fact-note">一半是 hello world</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num">∞</div>
+        <div class="fact-label">Tabs Open</div>
+        <div class="fact-note">关不掉，根本关不掉</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num">0</div>
+        <div class="fact-label">Social Skills</div>
+        <div class="fact-note">但代码 review 写得很认真</div>
+      </div>
+    </div>
+  </section>
 
-  <div class="bottom">
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <blockquote class="quote">
+      "代码能跑就不要动。"
+    </blockquote>
+    <p class="quote-attr">- 每个程序员的信仰</p>
+  </section>
+
+  <!-- NOW -->
+  <section class="now-section">
+    <h2>此刻</h2>
+    <div class="now-grid">
+      <div class="now-item">
+        <div class="now-label">在听</div>
+        <div class="now-value">随机播放</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">在看</div>
+        <div class="now-value">终端</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">在想</div>
+        <div class="now-value">要不要重构</div>
+      </div>
+      <div class="now-item">
+        <div class="now-label">状态</div>
+        <div class="now-value">available</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM -->
+  <nav class="bottom-bar">
     <div class="links">
       <a href="https://github.com/ahang39" target="_blank">GitHub</a>
     </div>
-    <div class="time" id="clock"></div>
-  </div>
+    <div class="clock" id="clock"></div>
+  </nav>
 
 <script>
+  // Clock
   function updateClock() {
     const now = new Date();
     const h = String(now.getHours()).padStart(2, '0');
     const m = String(now.getMinutes()).padStart(2, '0');
     const s = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').textContent = `${h}:${m}:${s} CST`;
+    document.getElementById('clock').textContent = `${h}:${m}:${s}`;
   }
   updateClock();
   setInterval(updateClock, 1000);
+
+  // GitHub stats (public API, no auth needed)
+  fetch('https://api.github.com/users/ahang39')
+    .then(r => r.json())
+    .then(d => {
+      document.getElementById('repos').textContent = d.public_repos || '?';
+      return fetch('https://api.github.com/users/ahang39/repos?per_page=100');
+    })
+    .then(r => r.json())
+    .then(repos => {
+      const stars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+      document.getElementById('github-stars').textContent = stars;
+    })
+    .catch(() => {
+      document.getElementById('github-stars').textContent = '?';
+      document.getElementById('repos').textContent = '?';
+    });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('h2, .fact, .quote, .quote-attr, .now-item').forEach(el => {
+    observer.observe(el);
+  });
 </script>
 
 </body>
