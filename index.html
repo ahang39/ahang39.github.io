@@ -419,39 +419,58 @@
     </div>
   </div>
 
-  <!-- FACTS -->
-  <section class="facts">
-    <h2>说几个数</h2>
-    <div class="fact-grid">
-      <div class="fact">
-        <div class="fact-num" id="github-stars">--</div>
-        <div class="fact-label">GitHub Stars</div>
-        <div class="fact-note">还在涨，谢谢各位</div>
-      </div>
-      <div class="fact">
-        <div class="fact-num" id="repos">--</div>
-        <div class="fact-label">Repositories</div>
-        <div class="fact-note">每一个都是认真写的（好吧大部分）</div>
-      </div>
-    </div>
-  </section>
-
   <!-- STACK -->
   <section class="stack">
     <h2>武器库</h2>
     <div class="stack-list">
       <span class="stack-item">Python</span>
       <span class="stack-item">TypeScript</span>
+      <span class="stack-item">JavaScript</span>
+      <span class="stack-item">Go</span>
+      <span class="stack-item">Rust</span>
+      <span class="stack-item">C++</span>
       <span class="stack-item">React</span>
+      <span class="stack-item">Next.js</span>
+      <span class="stack-item">Vue</span>
       <span class="stack-item">Node.js</span>
+      <span class="stack-item">Express</span>
+      <span class="stack-item">FastAPI</span>
+      <span class="stack-item">Flask</span>
+      <span class="stack-item">Django</span>
+      <span class="stack-item">PostgreSQL</span>
+      <span class="stack-item">MySQL</span>
+      <span class="stack-item">Redis</span>
+      <span class="stack-item">MongoDB</span>
+      <span class="stack-item">SQLite</span>
       <span class="stack-item">Docker</span>
+      <span class="stack-item">Kubernetes</span>
+      <span class="stack-item">Nginx</span>
       <span class="stack-item">Linux</span>
-      <span class="stack-item">Figma</span>
-      <span class="stack-item">Vim</span>
+      <span class="stack-item">Arch btw</span>
       <span class="stack-item">Git</span>
       <span class="stack-item">CI/CD</span>
-      <span class="stack-item">PostgreSQL</span>
-      <span class="stack-item">Redis</span>
+      <span class="stack-item">GitHub Actions</span>
+      <span class="stack-item">AWS</span>
+      <span class="stack-item">Cloudflare</span>
+      <span class="stack-item">Tailwind</span>
+      <span class="stack-item">Figma</span>
+      <span class="stack-item">Vim</span>
+      <span class="stack-item">Neovim</span>
+      <span class="stack-item">Tmux</span>
+      <span class="stack-item">Shell</span>
+      <span class="stack-item">Zsh</span>
+      <span class="stack-item">Webpack</span>
+      <span class="stack-item">Vite</span>
+      <span class="stack-item">Electron</span>
+      <span class="stack-item">WebSocket</span>
+      <span class="stack-item">GraphQL</span>
+      <span class="stack-item">REST API</span>
+      <span class="stack-item">OpenAI</span>
+      <span class="stack-item">LLM</span>
+      <span class="stack-item">Automation</span>
+      <span class="stack-item">Web Scraping</span>
+      <span class="stack-item">Puppeteer</span>
+      <span class="stack-item">Playwright</span>
     </div>
   </section>
 
@@ -506,23 +525,6 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
-
-  // GitHub stats
-  fetch('https://api.github.com/users/ahang39')
-    .then(r => r.json())
-    .then(d => {
-      document.getElementById('repos').textContent = d.public_repos || '?';
-      return fetch('https://api.github.com/users/ahang39/repos?per_page=100');
-    })
-    .then(r => r.json())
-    .then(repos => {
-      const stars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
-      document.getElementById('github-stars').textContent = stars;
-    })
-    .catch(() => {
-      document.getElementById('github-stars').textContent = '?';
-      document.getElementById('repos').textContent = '?';
-    });
 
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
